@@ -20,7 +20,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # --- Model Selection ---
-MODEL_NAME = "all-MiniLM-L6-v2"  # 80MB model
+#MODEL_NAME = "all-MiniLM-L6-v2"  # 80MB model
+MODEL_NAME = "all-mpnet-base-v2"  # 400MB model, better performance
 model = SentenceTransformer(MODEL_NAME)
 logger.info(f"Loaded model: {MODEL_NAME}")
 
@@ -60,7 +61,7 @@ def hybrid_score(sim_scores, movie_indices):
             0.3 * (movie["Rating"] / 10) + 
             0.2 * (movie["Votes"] / movies["Votes"].max())
         )
-        scores.append(score * 0.7 + popularity * 0.3)
+        scores.append(score * 0.8 + popularity * 0.2)
     return np.array(scores)
 
 # --- Poster Fetching ---
